@@ -1,10 +1,18 @@
 This repo is an attempt to join the SaintCon AppSec community walkthroughs with a challenge archive.
 
-
 ## Dependencies
 The walkthough code requires Retype to compile it.
 The walkthrough's need compiled before building the stack.
 `retype build`
+
+## Building
+
+`./quickstart.sh`
+`docker compose build`
+
+## Running
+
+`docker compose up`
 
 Once everything is build and running in Docker the entry point is at http://localhost:8080/
 

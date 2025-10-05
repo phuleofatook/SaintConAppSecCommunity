@@ -1,0 +1,180 @@
+{
+  "version": "3.11.0",
+  "created": "2025-10-05T06:12:10Z",
+  "files": [
+    {
+      "path": ".nojekyll"
+    },
+    {
+      "path": "404.html"
+    },
+    {
+      "path": "challenges\\2022-xss\\index.html"
+    },
+    {
+      "path": "challenges\\2023-sqli\\index.html"
+    },
+    {
+      "path": "challenges\\2024-broken-access-control\\index.html"
+    },
+    {
+      "path": "challenges\\2024-vtm\\index.html",
+      "old": true
+    },
+    {
+      "path": "challenges\\2025-vulnerability-catcher\\index.html"
+    },
+    {
+      "path": "challenges\\index.html"
+    },
+    {
+      "path": "challenges\\xsschallenge.html"
+    },
+    {
+      "path": "CNAME"
+    },
+    {
+      "path": "index.html"
+    },
+    {
+      "path": "resources/css/retype.css",
+      "old": true
+    },
+    {
+      "path": "resources/fonts/Inter-italic-latin-var.woff2",
+      "old": true
+    },
+    {
+      "path": "resources/fonts/Inter-roman-latin-var.woff2",
+      "old": true
+    },
+    {
+      "path": "resources/js/config.js",
+      "old": true
+    },
+    {
+      "path": "resources/js/lunr.js",
+      "old": true
+    },
+    {
+      "path": "resources/js/prism.js",
+      "old": true
+    },
+    {
+      "path": "resources/js/retype.js",
+      "old": true
+    },
+    {
+      "path": "resources/js/search.json",
+      "old": true
+    },
+    {
+      "path": "resources/lunr.js.LICENSE.txt",
+      "old": true
+    },
+    {
+      "path": "resources/mermaid.js.LICENSE.txt",
+      "old": true
+    },
+    {
+      "path": "resources/prism.js.LICENSE.txt",
+      "old": true
+    },
+    {
+      "path": "resources/retype.js.LICENSE.txt",
+      "old": true
+    },
+    {
+      "path": "resources/retype.LICENSE.txt",
+      "old": true
+    },
+    {
+      "path": "resources\\css\\retype.css"
+    },
+    {
+      "path": "resources\\fonts\\Inter-italic-latin-var.woff2"
+    },
+    {
+      "path": "resources\\fonts\\Inter-roman-latin-var.woff2"
+    },
+    {
+      "path": "resources\\js\\config.js"
+    },
+    {
+      "path": "resources\\js\\lunr.js"
+    },
+    {
+      "path": "resources\\js\\prism.js"
+    },
+    {
+      "path": "resources\\js\\retype.js"
+    },
+    {
+      "path": "resources\\js\\search.json"
+    },
+    {
+      "path": "resources\\lunr.js.LICENSE.txt"
+    },
+    {
+      "path": "resources\\mermaid.js.LICENSE.txt"
+    },
+    {
+      "path": "resources\\prism.js.LICENSE.txt"
+    },
+    {
+      "path": "resources\\retype.js.LICENSE.txt"
+    },
+    {
+      "path": "resources\\retype.LICENSE.txt"
+    },
+    {
+      "path": "robots.txt"
+    },
+    {
+      "path": "semgrep/index.html",
+      "old": true
+    },
+    {
+      "path": "sitemap.xml.gz"
+    },
+    {
+      "path": "static\\header.png"
+    },
+    {
+      "path": "static\\logo.svg"
+    },
+    {
+      "path": "static\\zap\\home-screen.png"
+    },
+    {
+      "path": "static\\zap\\hud-menu-retake-tutorial.png"
+    },
+    {
+      "path": "static\\zap\\hud-start.png"
+    },
+    {
+      "path": "static\\zap\\manual-explore.png"
+    },
+    {
+      "path": "static\\zap\\reset.png"
+    },
+    {
+      "path": "static\\zap\\session-persistence.png"
+    },
+    {
+      "path": "static\\zap\\startup.png"
+    },
+    {
+      "path": "walkthroughs\\sca\\index.html"
+    },
+    {
+      "path": "walkthroughs\\semgrep\\index.html"
+    },
+    {
+      "path": "walkthroughs\\zap\\index.html"
+    },
+    {
+      "path": "walkthroughs\\zap\\zaphud\\index.html"
+    }
+  ]
+}

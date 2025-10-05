@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>This site is vulnerable to XSS</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="jquery.min.js"></script>
+    <style>
+      .full {
+        height: 100%;
+        min-height: 100vh;
+      }
+
+      .light-gray {
+        background-color: #eeeeee;
+      }
+
+      .dark-gray {
+        background-color: #333333;
+      }
+
+    </style>
+</head>
+<body>
+<div class="container full">
+    <div class="col-12 light-gray full">
+        <div class="row rounded text-white dark-gray p-5 d-flex justify-content-center">
+            <h2>Prevent XSS with a Regular Expression</h2>
+        </div>
+        <div class="row p-5 d-flex justify-content-center m-3">
+            <p>
+                This site is vulnerable to a DOM-based XSS attack, and it's your job to fix it!
+            </p>
+            <p><b>Your objective is to write a regular expression that blocks malicious inputs and accepts legitimate
+                ones.</b></p>
+            <p> See the two input boxes at the bottom of the page? If you put your name in the "Test your input here:"
+                box and click "Submit", your name will appear in green on the page. Go ahead and try it!</p>
+            <p> There is a problem, however - if you put the right bit of malicious code in the box and submit, it will
+                get run. You can copy and paste any of the payloads listed below under "Sample malicious inputs" to see
+                what can happen (seriously, try it out. Feel free to try your own too).</p>
+            <p>Your job is to allow legitimate inputs like names, but prevent bad stuff. You can
+                do this by writing a kind of filter called a regex (short for "regular expression"). You can put your
+                regex in the "Test your regex here:" box to test if it allows legitimate inputs but blocks malicious
+                ones.</p>
+            <button class="btn btn-secondary" onclick="toggle('help')">Help! I've never written a regex before.</button>
+            <div class="d-none p-2 mt-3" id="help">
+                <p>If you've never used regex before, don't worry! Here's a simple one to get you started (you can copy
+                    + paste this in the regex box below):</p>
+                <pre>^[a-z]$</pre>
+                <p>The first part, ^, means to start matching at the beginning of the input.</p>
+                <p>The second part, [a-z], means to match any letter a-z (lowercase).</p>
+                <p>The last part, $, means to end matching at the end of the input.</p>
+                <p>All in all, this means to match any input that consists entirely of lowercase letters.</p>
+                <p>Here are some other websites that will help you learn other aspects of regex:</p>
+                <ul>
+                    <li>
+                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Cheatsheet"
+                           target="_blank">Mozilla regex cheat sheet</a></li>
+                    <li><a href="https://regexr.com" target="_blank">Regexr - regex tester</a></li>
+                    <li><a href="https://autoregex.xyz" target="_blank">Generate a regex from plain English</a></li>
+                </ul>
+                <p>
+                    Also, there are plenty of hints below to get you started. Don't feel bad about using them, nobody
+                    will know if you do. The folks at the AppSec community on the first floor are also here to help
+                    (plus they can give you a minibadge).
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-4">
+                <p class="d-flex justify-content-center flex-column">
+                    <b>Sample malicious inputs</b>
+                <pre>&lt;div onclick="alert(1)"&gt;Click me&lt;/div&gt;</pre>
+                <pre>&lt;img onerror=alert(1) src="#" /&gt;</pre>
+                </p>
+            </div>
+            <div class="col-4">
+                <p>
+                    <b>Sample legitimate inputs</b>
+                </p>
+                <pre>Jane Doe</pre>
+                <pre>Sean O'Connery</pre>
+            </div>
+            <div class="col-2"></div>
+        </div>
+        <div class="row p-2 mb-3 d-flex justify-content-center">
+            <p id="sink" style="height:1em;font-weight:bold;color:green">Your input will appear here.</p>
+        </div>
+        <div class="form-group row">
+            <label for="name" class="col-sm-3 col-form-label"><b>Test your input here:</b></label>
+            <div class="col-sm-7">
+                <input class="form-control" id="name" placeholder="Jane Doe" onkeyup="setStuff(event)">
+            </div>
+            <div class="col-sm-2">
+                <button class="btn btn-danger" onclick="setStuff(null)">Submit</button>
+            </div>
+        </div>
+        <div class="form-group row pb-3">
+            <label for="regex" class="col-sm-3 col-form-label"><b>Test your regex here:</b></label>
+            <div class="col-sm-7">
+                <input class="form-control" id="regex" placeholder="\w+" onkeyup="setStuff(event)">
+            </div>
+            <div class="col-sm-2">
+                <button class="btn btn-primary" onclick="setStuff(null)">Submit</button>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center m-3">
+            <button class="btn btn-secondary" onclick="toggle('hint1')">Show Hint #1</button>
+            <div class="d-none p-5" id="hint1">
+                <p> Your regex should probably be "anchored" - this means that it cares about where the input starts and
+                    stops, not just any match in between. You can match the start of an value with the ^ character, and
+                    the end of a value with the $ charater. For example, the following regex will only match a single
+                    lowercase letter:</p>
+                <pre>^[a-z]$</pre>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center m-3">
+            <button class="btn btn-secondary" onclick="toggle('hint2')">Show Hint #2</button>
+            <div class="d-none p-5" id="hint2">
+                <p> If you want to match more than one character, you can add a + at the end of your set. This means
+                    "match at least one of the previous pattern." For example, the following regex will match a word
+                    comprised of lowercase letters:</p>
+                <pre>^[a-z]+$</pre>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center m-3">
+            <button class="btn btn-secondary" onclick="toggle('hint3')">Show Hint #3</button>
+            <div class="d-none p-5" id="hint3">
+                <p> You can put whatever characters you want to match inside a set of brackets. To match all letters
+                    (uppercase and lowercase), you can use A-z. To match all numbers, you can use 0-9. For example, the
+                    following regex will match a word comprised of letters and numbers:</p>
+                <pre>^[A-z0-9]+$</pre>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center m-3">
+            <button class="btn btn-secondary" onclick="toggle('hint4')">Show Hint #4</button>
+            <div class="d-none p-5" id="hint4">
+                <p> You can match spaces with a special pattern: \s
+                    For example, the following regex will match a sentence with no punctuation:</p>
+                <pre>^[A-z0-9\s]+$</pre>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center m-3">
+            <button class="btn btn-secondary" onclick="toggle('hint5')">Show Hint #5</button>
+            <div class="d-none p-5" id="hint5">
+                <p> You can match other punctuation by escaping it with a backslash - i.e. \.
+                    For example, the following regex will match a sentence with periods and question marks:</p>
+                <pre>^[A-z0-9\s\.\?]+$</pre>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center m-3">
+            <button class="btn btn-secondary" onclick="toggle('answer')">Show Answer</button>
+            <div class="d-none p-5" id="answer">
+                <p>You can match the values in the "Legitimate Inputs" column and not match the values in the "Malicious
+                    inputs" column like this:</p>
+                <pre>^[A-z\-\'\s]+$</pre>
+                <p>Note that this disallows any characters that allow XSS on this website (like &gt; or &lt;) but still
+                    allows you to enter your name.</p>
+            </div>
+        </div>
+    </div>
+    <script>
+	  	var namesToValidate=["Jane Doe", "Sean O'Connery"];
+      	var scriptsToValidate=['<div onmouseover="alert(1)">hover</div>', '<img onerror=alert(1) src="#" />'];
+        function toggle(id) {
+          let el = document.getElementById(id);
+          el.classList.toggle("d-none");
+        }
+
+        function setName() {
+          let name = decodeURI(window.location.hash.substring(1));
+          let inp = document.getElementById("name");
+          let rgx_stored = localStorage.getItem("regex");
+          let rgx = atob(rgx_stored);
+          rgx = new RegExp(rgx);
+          let sink = document.getElementById("sink");
+          if (!rgx_stored || (!!rgx && name.match(rgx))) {
+            sink.innerHTML = name;
+          } else {
+            sink.innerHTML = "<span style='color:red'>Your input didn't match your regex.</span>"
+          }
+          inp.value = name;
+        }
+
+        function addNameToURL(e) {
+		if (e && e.key !== "Enter") {
+			return;
+		}
+          let inp = document.getElementById("name");
+          history.pushState({}, '', document.location.href.split("#")[0] + "#" + encodeURI(inp.value));
+          setName();
+        }
+
+        function setRegex(e) {
+		if (e && e.key !== "Enter") { 
+                        return;
+                }
+          let rgx = document.getElementById("regex").value;
+            if (namesToValidate.every(x => !!x.match(rgx)) && scriptsToValidate.every(x => !x.match(rgx))) {
+            	sink.innerHTML="You have solved the challenge!";
+            	return true;
+            }
+          localStorage.setItem("regex", btoa(rgx));
+        }
+        setName();
+	let stored = localStorage.getItem("regex");
+	if (!!stored) {
+          document.getElementById("regex").value = atob(localStorage.getItem("regex"));
+	}x();
+	    function setStuff(e) {
+	      if (!setRegex(e)) {
+	        addNameToURL(e);
+	       }
+	    }
+
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>

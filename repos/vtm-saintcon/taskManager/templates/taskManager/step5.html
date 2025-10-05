@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>Task Manager</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Styles
+    ================================================== -->  
+    {% load static %}
+    <link rel="stylesheet" href="{% static "taskManager/css/bootstrap.css" %}"/>
+    <link rel="stylesheet" href="{% static "taskManager/css/bootstrap.min.css" %}"/>
+    <link rel="stylesheet" href="{% static "taskManager/css/font-awesome.css" %}"/>
+    <link rel="stylesheet" href="{% static "taskManager/css/style.css" %}"/>
+    
+    
+    <!-- Google Fonts
+    ================================================== -->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:300,400,400italic,700" >
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Ubuntu:300,400,400italic,700" > 
+    
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    </head>
+<body>
+
+
+<!-- Navbar
+================================================== -->
+  <header class="header-frontend">
+      <div class="navbar navbar-default navbar-static-top">
+          <div class="container">
+              <div class="navbar-header">
+                  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                      <span class="fa fa-bars"></span>
+                  </button>
+                  <a class="navbar-brand" href="/">AppSec<span>Community</span></a>
+              </div>
+          </div>
+      </div>
+  </header>
+  <!--header end-->
+
+<!-- Body/content
+================================================== -->
+         <!--container start-->
+         <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3>Broken Access Control</h3>
+                    <p>To complete your task, review of the below <em>dashboard</em> function and compare it to the <em>project_list</em> function to identify the coding flaw that results in the vulnerability.</p>
+                    <hr/>
+                    <pre>
+
+def dashboard(request):
+    sorted_projects = Project.objects.filter(
+        users_assigned=request.user.id).order_by('title')
+    sorted_tasks = Task.objects.filter(
+        users_assigned=request.user.id).order_by('title')
+    return render(request,
+                  'taskManager/dashboard.html',
+                  {'project_list': sorted_projects,
+                   'user': request.user,
+                   'task_list': sorted_tasks})
+
+@login_required
+def project_list(request):
+    sorted_projects = Project.objects.filter(
+        users_assigned=request.user.id).order_by('title')
+    user_can_edit = request.user.has_perm('project_edit')
+    user_can_delete = request.user.has_perm('project_delete')
+    user_can_add = request.user.has_perm('project_add')
+    return render(request,
+                  'taskManager/project_list.html',
+                  {'project_list': sorted_projects,
+                   'user': request.user,
+                   'user_can_edit': user_can_edit,
+                   'user_can_delete': user_can_delete,
+                   'user_can_add': user_can_add})
+                    </pre>
+                    <hr>
+                    <h3>Final Step:</h3>
+                    <p>To wrap up this walkthrough (and get your hacker's challenge key), identify which of the following lines would fix the access control problem.</p>
+                    <hr>
+                    <ul>
+                    <li><a onclick="alert('Not quite, projects are only returned here based on the authenticated user')"><button type="submit" class="btn btn-info">Option 1</button></a> - <code>sorted_projects = Project.objects.filter(users_assigned=request.user.id).order_by('title')</code></li><br>
+                    <li><a onclick="alert('Nope, this code checks to see whether the current authenticated user can edit projects')"><button type="submit" class="btn btn-info">Option 2</button></a> - <code>user_can_edit = request.user.has_perm('project_edit')</code></li><br>
+                    <li><a onclick="alert('Way to go! This is the correct option.\nThe dashboard function is missing the login_required decorator, which checks to see whether a user has logged into the application.')"><button type="submit" class="btn btn-info">Option 3</button></a> - <code>@login_required</code></li><br>
+                    <li><a onclick="alert('Not quite, projects are only returned here based on the authenticated user')"><button type="submit" class="btn btn-info">Option 4</button></a> - <code>sorted_tasks = Task.objects.filter(users_assigned=request.user.id).order_by('title')</code></li><br>
+                    <li><a onclick="alert('Good try, but this code checks to see whether the currently authenticated user is allowed to add new projects')"><button type="submit" class="btn btn-info">Option 5</button></a> - <code>user_can_add = request.user.has_perm('project_add')</code></li>
+                    </ul>
+
+                </div>
+                
+            </div>
+            <hr/>
+            <div class="row">
+                <div class="col-lg-10">
+                    <a href="{% url 'taskManager:login' %}"><button type="submit" class="btn btn-info">Return to the start</button></a>
+                </div>
+            </div>
+        </div>      
+
+<!-- Body/content -->
+
+
+<!-- Footer
+================================================== -->
+
+<!--footer start-->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7">
+                <img width="500" src="{% static "taskManager/img/appsec-community-logo.jpg" %}" class="pull-right" alt="logo">
+            </div>
+            
+            <div class="col-lg-5">
+                <h1>AppSec Community</h1>
+                <p>Presented by <em>l4wke</em> and <em>sketrik</em>.</p>
+            </div>
+            
+        </div>
+    </div>
+</footer>
+<!--footer end-->
+
+<!-- End Footer -->
+
+<!-- Javascript
+================================================== -->
+    <!--<script src="{% static "taskManager/js/bootstrap.min.js" %}" ></script>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>-->
+    
+</body>     
+</html>

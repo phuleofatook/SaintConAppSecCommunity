@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Saintcon AppSec Lab Portal</title>
+<style>
+body { font-family: "Segoe UI", Roboto, Arial, sans-serif; margin: 2rem; background:#f7f7f7; color:#333; }
+header { text-align:center; margin-bottom:2rem; }
+header img { max-width:200px; margin-bottom:1rem; }
+h1 { font-size:2rem; margin:0; color:#1e2a78; }
+.card { background:white; border-radius:8px; padding:1.5rem; margin-bottom:1.5rem; box-shadow:0 4px 10px rgba(0,0,0,0.05);}
+.card h2 { color:#1e2a78; margin-top:0; }
+button { margin-right:.5rem; padding:.5rem 1rem; border:none; border-radius:4px; background:#1e2a78; color:white; cursor:pointer;}
+#reset-status { margin-top:1rem; font-size:.9rem; color:#555; }
+</style>
+</head>
+<body>
+<header>
+  <img src="Appsec.svg" alt="Saintcon AppSec Logo">
+  <h1>Training Lab — Conference 2025</h1>
+</header>
+<div class="card">
+  <h2>Vulnerable Apps</h2>
+  <p>
+    <a href="http://localhost:8081/resetdb.php" target="_blank">SQLi Training App (PHP)</a><br>
+    <a href="/app/vtm/" target="_blank">VTM Task Manager (Python)</a><br>
+  </p>
+  <p>
+    <button id="reset-sqli">Reset SQLi DB</button>
+    <button id="reset-vtm">Reset VTM DB</button>
+  </p>
+  <div id="reset-status"></div>
+</div>
+<div class="card">
+  <h2>Walkthroughs & Docs</h2>
+  <ul>
+    <li><a href="/walkthroughs/semgrep.html" target="_blank">Semgrep walkthrough</a></li>
+    <li><a href="/walkthroughs/sqli-basics.html" target="_blank">SQLi basics</a></li>
+  </ul>
+</div>
+<div class="card">
+  <h2>Tools</h2>
+  <p>Open the Tools container: <code>docker-compose exec tools bash</code></p>
+</div>
+<script>
+async function doReset(path, label) {
+  const statusEl = document.getElementById('reset-status');
+  statusEl.textContent = `Requesting ${label}...`;
+  try {
+    const resp = await fetch(path, { method:'POST' });
+    if(resp.ok){
+      const text = await resp.text();
+      statusEl.textContent = `${label} succeeded: ${text.substring(0,200)}`;
+    } else {
+      statusEl.textContent = `${label} failed: ${resp.status} ${resp.statusText}`;
+    }
+  } catch(err){
+    statusEl.textContent = `${label} error: ${err}`;
+  }
+}
+document.getElementById('reset-sqli').addEventListener('click', ()=>doReset('/reset/sqli/', 'Reset SQLi DB'));
+document.getElementById('reset-vtm').addEventListener('click', ()=>doReset('/reset/vtm/', 'Reset VTM DB'));
+</script>
+</body>
+</html>

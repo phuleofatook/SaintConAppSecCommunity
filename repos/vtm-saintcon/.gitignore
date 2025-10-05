@@ -1,0 +1,7 @@
+mysite.log
+*.sqlite3
+*.pyc
+.DS_Store
+*venv/
+taskManager/static/taskManager/uploads/
+*.log

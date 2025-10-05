@@ -1,0 +1,58 @@
+services:
+  portal:
+    build:
+      context: .
+      dockerfile: portal/Dockerfile
+    container_name: lab-portal
+    ports:
+      - "8080:80"
+    networks:
+      - labnet
+
+  sqli-www:
+    container_name: sqli-www
+    build: ./repos/saintcon-appsec-sqli-walkthrough
+    ports: 
+        - "8081:80"
+    volumes:
+        - ./repos/saintcon-appsec-sqli-walkthrough/www:/var/www/html/
+    depends_on:
+        - sqli-db
+    networks:
+        - labnet
+    restart: always
+  sqli-db:
+    image: mysql:8.0
+    container_name: sqli-db
+    ports: 
+        - "3306:3306"
+    command: --default-authentication-plugin=mysql_native_password --secure-file-priv=''
+    environment:
+        MYSQL_DATABASE: sqlitraining
+        MYSQL_ROOT_PASSWORD: root  
+    volumes:
+        - ./repos/saintcon-appsec-sqli-walkthrough/udf:/usr/lib/mysql/plugin
+        - persistent:/var/lib/mysql
+    networks:
+        - labnet
+    restart: always
+
+  vtm:
+    build:
+      context: ./repos/vtm-saintcon
+      dockerfile: Dockerfile
+    container_name: vtm-app
+    command: sh -c "python3 manage.py makemigrations && python3 manage.py migrate --noinput && python3 manage.py loaddata taskManager/fixtures/* && python3 manage.py collectstatic --noinput && python manage.py runserver 0.0.0.0:80"
+    ports:
+      - "8082:80"
+    networks:
+      - labnet
+    restart: "no"
+
+networks:
+  labnet:
+    driver: bridge
+
+volumes:
+  persistent:
+  data:

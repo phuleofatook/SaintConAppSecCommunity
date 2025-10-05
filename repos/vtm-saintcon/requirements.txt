@@ -1,0 +1,10 @@
+asgiref
+Django
+django-extensions
+django-six
+pytz
+sqlparse
+xlwt
+requests
+django-health-check
+psutil

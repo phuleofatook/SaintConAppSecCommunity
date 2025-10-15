@@ -8,6 +8,7 @@ The walkthrough's need compiled before building the stack.
 ## Building
 
 `./quickstart.sh`
+
 `docker compose build`
 
 ## Running
@@ -26,7 +27,7 @@ Originally found at https://github.com/sethlaw/vtm-saintcon
 ### 2023 - SQLi
 There have been various "sources" for this challenge.  The one used in this project is from https://github.com/smanesse/saintcon-appsec-sqli-walkthrough
 
-#### 
+#### Other sources
 https://github.com/smanesse/saintcon-2023-beginner-challenge 
 forked from 
 https://github.com/wolfleyb/owasp-saintcon-2023-beginner-challenge 

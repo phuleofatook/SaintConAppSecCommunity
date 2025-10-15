@@ -10,7 +10,7 @@
 
 set -e
 
-RETYPE_DIR="repos/appsec-community"
+RETYPE_DIR="$PWD/repos/appsec-community"
 OUTPUT_DIR="$RETYPE_DIR/.retype"
 
 echo "=== SaintCon AppSec Lab Quickstart ==="
@@ -32,15 +32,17 @@ if [ ! -d "$RETYPE_DIR" ]; then
 fi
 
 echo "✅ Retype found. Building documentation..."
-cd "$RETYPE_DIR"
+pushd "$RETYPE_DIR" > /dev/null
 
 retype build
+
+popd > /dev/null
 
 if [ -d "$OUTPUT_DIR" ]; then
   echo "✅ Build complete. Output available at:"
   echo "   $OUTPUT_DIR"
 else
-  echo "⚠️  Build finished, but output folder not found. Check for errors above."
+  echo "⚠️  Build finished, but output folder not found ($OUTPUT_DIR). Check for errors above."
 fi
 
 cd - >/dev/null

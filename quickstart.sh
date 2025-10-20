@@ -14,26 +14,9 @@ RETYPE_DIR="$PWD/repos/appsec-community"
 OUTPUT_DIR="$RETYPE_DIR/.retype"
 
 echo "=== SaintCon AppSec Lab Quickstart ==="
-echo "Checking for Retype CLI..."
+echo "Installing Retype CLI..."
 
-if ! command -v npm &> /dev/null; then
-  echo "❌ Error: 'npm' not found in PATH."
-  echo "   Please install npm first:"
-  echo "     sudo apt-get install npm
-  echo
-  echo "After installation, re-run this script."
-  exit 1
-fi
-
-
-if ! command -v retype &> /dev/null; then
-  echo "❌ Error: 'retype' not found in PATH."
-  echo "   Please install Retype first:"
-  echo "     npm install -g retypeapp"
-  echo
-  echo "After installation, re-run this script."
-  exit 1
-fi
+sudo npm install -g retypeapp
 
 if [ ! -d "$RETYPE_DIR" ]; then
   echo "❌ Error: Expected directory '$RETYPE_DIR' not found."
@@ -41,12 +24,10 @@ if [ ! -d "$RETYPE_DIR" ]; then
   exit 1
 fi
 
-echo "✅ Retype found. Building documentation..."
-pushd "$RETYPE_DIR" > /dev/null
+echo "✅ Retype installed. Building documentation..."
 
-retype build
-
-popd > /dev/null
+cd $RETYPE_DIR
+/usr/local/bin/retype build
 
 if [ -d "$OUTPUT_DIR" ]; then
   echo "✅ Build complete. Output available at:"
@@ -56,4 +37,15 @@ else
 fi
 
 cd - >/dev/null
+
+echo "Installing python3-pip"
+sudo apt-get update
+sudo apt-get install -y python3-pip
+
+echo "Installing semgrep"
+pip3 install semgrep
+
+echo "Cloning saintcon-appsec-challenge-2023 repository"
+cd
+git clone https://github.com/smanesse/saintcon-appsec-challenge-2023.git
 echo "=== Done! ==="

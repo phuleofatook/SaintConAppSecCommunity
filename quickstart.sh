@@ -14,9 +14,14 @@ RETYPE_DIR="$PWD/repos/appsec-community"
 OUTPUT_DIR="$RETYPE_DIR/.retype"
 
 echo "=== SaintCon AppSec Lab Quickstart ==="
-echo "Installing Retype CLI..."
 
-sudo npm install -g retypeapp
+if [ ! -f /usr/local/bin/retype ]; then
+  echo "Installing Retype CLI..."
+
+  sudo npm install -g retypeapp
+fi
+
+echo "Retype CLI found."
 
 if [ ! -d "$RETYPE_DIR" ]; then
   echo "❌ Error: Expected directory '$RETYPE_DIR' not found."
@@ -38,11 +43,14 @@ fi
 
 cd - >/dev/null
 
-echo "Installing python3-pip"
-sudo apt-get install -y python3-pip
+if [ ! -f /snap/bin/semgrep ]; then
+  echo "Semgrep not found. Installing..."
+  sudo snap install semgrep
 
-echo "Installing semgrep"
-pip3 install semgrep --break-system-packages
+else
+  echo "Semgrep found."
+  semgrep --version
+fi
 
 echo "Cloning saintcon-appsec-challenge-2023 repository"
 cd

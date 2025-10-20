@@ -54,5 +54,9 @@ fi
 
 echo "Cloning saintcon-appsec-challenge-2023 repository"
 cd
-git clone https://github.com/smanesse/saintcon-appsec-challenge-2023.git
+if [ -d saintcon-appsec-challenge-2023 ]; then
+  echo "Directory saintcon-appsec-challenge-2023 already exists. Skipping clone."
+else
+  git clone https://github.com/smanesse/saintcon-appsec-challenge-2023.git
+fi
 echo "=== Done! ==="

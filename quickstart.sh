@@ -16,6 +16,16 @@ OUTPUT_DIR="$RETYPE_DIR/.retype"
 echo "=== SaintCon AppSec Lab Quickstart ==="
 echo "Checking for Retype CLI..."
 
+if ! command -v npm &> /dev/null; then
+  echo "❌ Error: 'npm' not found in PATH."
+  echo "   Please install npm first:"
+  echo "     sudo apt-get install npm
+  echo
+  echo "After installation, re-run this script."
+  exit 1
+fi
+
+
 if ! command -v retype &> /dev/null; then
   echo "❌ Error: 'retype' not found in PATH."
   echo "   Please install Retype first:"

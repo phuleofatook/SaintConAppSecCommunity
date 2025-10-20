@@ -39,8 +39,7 @@ fi
 cd - >/dev/null
 
 echo "Installing python3-pip"
-sudo apt-get update
-sudo apt-get install -y python3-pip
+sudo apt-get install -y python3-pip --break-system-packages
 
 echo "Installing semgrep"
 pip3 install semgrep

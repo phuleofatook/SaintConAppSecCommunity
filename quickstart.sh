@@ -43,10 +43,16 @@ fi
 
 cd - >/dev/null
 
-if [ ! -f /snap/bin/semgrep ]; then
-  echo "Semgrep not found. Installing..."
-  sudo snap install semgrep
+if [ ! -d /usr/bin/pipx ]; then
+  sudo apt install pipx
+else
+  echo "pipx found."
+  pipx --version
+fi
 
+if [ ! -f ~/.local/bin/semgrep ]; then
+  echo "Semgrep not found. Installing..."
+  pipx install semgrep
 else
   echo "Semgrep found."
   semgrep --version

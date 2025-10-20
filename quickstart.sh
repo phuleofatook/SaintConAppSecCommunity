@@ -39,10 +39,10 @@ fi
 cd - >/dev/null
 
 echo "Installing python3-pip"
-sudo apt-get install -y python3-pip --break-system-packages
+sudo apt-get install -y python3-pip
 
 echo "Installing semgrep"
-pip3 install semgrep
+pip3 install semgrep --break-system-packages
 
 echo "Cloning saintcon-appsec-challenge-2023 repository"
 cd

@@ -66,3 +66,6 @@ else
   git clone https://github.com/smanesse/saintcon-appsec-challenge-2023.git
 fi
 echo "=== Done! ==="
+
+### vulncatcher.demo1@gmail.com
+### AF3S-cpmqu-HivtZ
